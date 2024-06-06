@@ -1,23 +1,22 @@
-import React from "react";
 import { useSelector } from "react-redux";
-
 import "./style.scss";
+import { getGenresData } from "../../store/homeSlice";
 
-const Genres = ({ data }) => {
-    const { genres } = useSelector((state) => state.home);
+function Genres({ data, type }) {
+  const genres = useSelector(getGenresData);
 
-    return (
-        <div className="genres">
-            {data?.map((g) => {
-                if (!genres[g]?.name) return;
-                return (
-                    <div key={g} className="genre">
-                        {genres[g]?.name}
-                    </div>
-                );
-            })}
-        </div>
-    );
-};
+  return (
+    <div className="genres">
+      {data?.map((genre) => {
+        if (!type && !genres[genre]?.name) return;
+        return (
+          <div key={genre} className="genre">
+            {type === "name" ? genre : genres[genre]?.name}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 export default Genres;
